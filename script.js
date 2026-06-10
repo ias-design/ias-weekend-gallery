@@ -9,7 +9,7 @@
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
-  switzerland2025:{ folder: 'photos/switzerland2025',count: 0 },
+  switzerland2025:{ folder: 'photos/switzerland2025',count: 65 },
   greece2026:     { folder: 'photos/greece2026',     count: 0 }
 };
 
@@ -66,11 +66,9 @@ dropMenu.querySelectorAll('a').forEach(link => {
     const galleryId = link.dataset.gallery;
     showGallery(galleryId);
     dropMenu.classList.remove('open');
-    // Update active state
     dropMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
     link.classList.add('active');
-    // Update dropdown button label
-    dropToggle.textContent = link.textContent + ' \u25BE';
+    dropToggle.textContent = link.textContent + ' ▾';
   });
 });
 
@@ -88,10 +86,9 @@ function showGallery(id) {
 function buildGrid(id) {
   const grid = document.getElementById('grid-' + id);
   if (!grid) return;
-  if (grid.dataset.built === 'true') return; // already built
+  if (grid.dataset.built === 'true') return;
 
   const { folder, count } = galleries[id];
-  lightboxPhotos = [];
 
   if (count === 0) {
     grid.innerHTML = '<p style="color:#aaa; font-size:0.85rem; letter-spacing:0.06em; padding: 20px 0;">Photos coming soon.</p>';
@@ -103,7 +100,6 @@ function buildGrid(id) {
   for (let i = 1; i <= count; i++) {
     const num = String(i).padStart(3, '0');
     const src = folder + '/' + num + '.jpg';
-    lightboxPhotos.push(src);
 
     const item = document.createElement('div');
     item.className = 'photo-item';
@@ -114,7 +110,17 @@ function buildGrid(id) {
     img.alt = 'Photo ' + i;
     img.loading = 'lazy';
 
+    // Download button
+    const dlBtn = document.createElement('a');
+    dlBtn.className = 'dl-btn';
+    dlBtn.href = src;
+    dlBtn.download = num + '.jpg';
+    dlBtn.title = 'Download photo';
+    dlBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    dlBtn.addEventListener('click', e => e.stopPropagation());
+
     item.appendChild(img);
+    item.appendChild(dlBtn);
     item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
     fragment.appendChild(item);
   }
