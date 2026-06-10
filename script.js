@@ -2,7 +2,7 @@
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
-  switzerland2025:{ folder: 'photos/switzerland2025',count: 65 },
+  switzerland2025:{ folder: 'photos/switzerland2025',count: 66 },
   greece2026:     { folder: 'photos/greece2026',     count: 0 }
 };
 
