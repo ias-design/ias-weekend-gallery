@@ -1,4 +1,4 @@
-// IAS Weekends Gallery v1.1
+// IAS Weekends Gallery v1.2
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
@@ -62,14 +62,11 @@ dropMenu.querySelectorAll('a').forEach(link => {
 
 function showGallery(id) {
   currentGallery = id;
-  document.querySelectorAll('.gallery-section').forEach(s => {
-    s.classList.add('hidden');
-    s.style.display = '';
-  });
+  // Remove active from all sections
+  document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
+  // Add active to the selected one
   const section = document.getElementById(id);
-  if (section) {
-    section.classList.remove('hidden');
-  }
+  if (section) section.classList.add('active');
   buildGrid(id);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
