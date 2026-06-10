@@ -303,3 +303,7 @@ main {
 .dl-btn svg {
   display: block;
 }
+
+
+/* Fix: ensure active gallery section is always visible */
+.gallery-section.active { display: block !important; }
