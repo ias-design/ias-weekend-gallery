@@ -4,11 +4,11 @@ const galleries = {
       portugal2025:   { folder: 'photos/portugal2025',   count: 62 },
       switzerland2025:{ folder: 'photos/switzerland2025',count: 66 },
       greece2026:     { folder: 'photos/greece2026',     count: 0 }
-};
+};h
 
 const PASSWORD = 'ias-weekends';
 
-var currentGallery = 'switzerland2025';
+var currentGallery = null;
 var lightboxPhotos = [];
 var lightboxIndex = 0;
 
@@ -30,7 +30,6 @@ function checkPassword() {
       if (pwInput.value.trim() === PASSWORD) {
               pwScreen.style.display = 'none';
               mainSite.style.display = 'block';
-              showGallery('switzerland2025');
       } else {
               pwError.style.display = 'block';
               pwInput.value = '';
