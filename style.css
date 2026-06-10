@@ -263,3 +263,43 @@ main {
 #lb-prev:hover, #lb-next:hover { opacity: 1; }
 #lb-prev { left: 16px; }
 #lb-next { right: 16px; }
+
+
+/* ===== DOWNLOAD BUTTON ON PHOTO GRID ===== */
+.photo-item {
+  position: relative;
+}
+
+.dl-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2c2c2c;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.18);
+  z-index: 10;
+}
+
+.photo-item:hover .dl-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dl-btn:hover {
+  background: #fff;
+  color: #b5a99a;
+}
+
+.dl-btn svg {
+  display: block;
+}
