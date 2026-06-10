@@ -1,0 +1,161 @@
+// ===== GALLERY DATA =====
+// To add your photos, put your JPG files in folders inside the repo:
+//   photos/austria2024/001.jpg, 002.jpg, ... etc.
+//   photos/portugal2025/001.jpg, 002.jpg, ... etc.
+//   photos/switzerland2025/001.jpg, 002.jpg, ... etc.
+//   photos/greece2026/001.jpg, 002.jpg, ... etc.
+// Then update the count numbers below to match how many photos you have per trip.
+
+const galleries = {
+  austria2024:    { folder: 'photos/austria2024',    count: 0 },
+  portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
+  switzerland2025:{ folder: 'photos/switzerland2025',count: 0 },
+  greece2026:     { folder: 'photos/greece2026',     count: 0 }
+};
+
+// ===== PASSWORD =====
+const PASSWORD = 'ias-weekends';
+
+// ===== STATE =====
+let currentGallery = 'austria2024';
+let lightboxPhotos = [];
+let lightboxIndex = 0;
+
+// ===== ELEMENTS =====
+const pwScreen   = document.getElementById('password-screen');
+const mainSite   = document.getElementById('main-site');
+const pwInput    = document.getElementById('pw-input');
+const pwBtn      = document.getElementById('pw-btn');
+const pwError    = document.getElementById('pw-error');
+const dropToggle = document.querySelector('.dropdown-toggle');
+const dropMenu   = document.querySelector('.dropdown-menu');
+const lightbox   = document.getElementById('lightbox');
+const lbOverlay  = document.getElementById('lb-overlay');
+const lbImg      = document.getElementById('lb-img');
+const lbClose    = document.getElementById('lb-close');
+const lbPrev     = document.getElementById('lb-prev');
+const lbNext     = document.getElementById('lb-next');
+
+// ===== PASSWORD CHECK =====
+function checkPassword() {
+  if (pwInput.value.trim() === PASSWORD) {
+    pwScreen.classList.add('hidden');
+    mainSite.classList.remove('hidden');
+    showGallery('austria2024');
+  } else {
+    pwError.style.display = 'block';
+    pwInput.value = '';
+    pwInput.focus();
+  }
+}
+
+pwBtn.addEventListener('click', checkPassword);
+pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+
+// ===== DROPDOWN =====
+dropToggle.addEventListener('click', e => {
+  e.stopPropagation();
+  dropMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', () => dropMenu.classList.remove('open'));
+
+dropMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const galleryId = link.dataset.gallery;
+    showGallery(galleryId);
+    dropMenu.classList.remove('open');
+    // Update active state
+    dropMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    link.classList.add('active');
+    // Update dropdown button label
+    dropToggle.textContent = link.textContent + ' \u25BE';
+  });
+});
+
+// ===== SHOW GALLERY =====
+function showGallery(id) {
+  currentGallery = id;
+  document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
+  const section = document.getElementById(id);
+  if (section) section.classList.add('active');
+  buildGrid(id);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== BUILD PHOTO GRID =====
+function buildGrid(id) {
+  const grid = document.getElementById('grid-' + id);
+  if (!grid) return;
+  if (grid.dataset.built === 'true') return; // already built
+
+  const { folder, count } = galleries[id];
+  lightboxPhotos = [];
+
+  if (count === 0) {
+    grid.innerHTML = '<p style="color:#aaa; font-size:0.85rem; letter-spacing:0.06em; padding: 20px 0;">Photos coming soon.</p>';
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 1; i <= count; i++) {
+    const num = String(i).padStart(3, '0');
+    const src = folder + '/' + num + '.jpg';
+    lightboxPhotos.push(src);
+
+    const item = document.createElement('div');
+    item.className = 'photo-item';
+    item.dataset.index = i - 1;
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Photo ' + i;
+    img.loading = 'lazy';
+
+    item.appendChild(img);
+    item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
+    fragment.appendChild(item);
+  }
+
+  grid.appendChild(fragment);
+  grid.dataset.built = 'true';
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(index) {
+  const { folder, count } = galleries[currentGallery];
+  lightboxPhotos = [];
+  for (let i = 1; i <= count; i++) {
+    lightboxPhotos.push(folder + '/' + String(i).padStart(3, '0') + '.jpg');
+  }
+  lightboxIndex = index;
+  lbImg.src = lightboxPhotos[lightboxIndex];
+  lightbox.classList.remove('hidden');
+  lbOverlay.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.add('hidden');
+  lbOverlay.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function lightboxNav(dir) {
+  lightboxIndex = (lightboxIndex + dir + lightboxPhotos.length) % lightboxPhotos.length;
+  lbImg.src = lightboxPhotos[lightboxIndex];
+}
+
+lbClose.addEventListener('click', closeLightbox);
+lbOverlay.addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', e => { e.stopPropagation(); lightboxNav(-1); });
+lbNext.addEventListener('click', e => { e.stopPropagation(); lightboxNav(1); });
+
+document.addEventListener('keydown', e => {
+  if (lightbox.classList.contains('hidden')) return;
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+  if (e.key === 'Escape')     closeLightbox();
+});
