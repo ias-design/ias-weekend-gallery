@@ -6,6 +6,7 @@ const galleries = {
       greece2026:     { folder: 'photos/greece2026',     count: 0 }
 };
 
+// gallery config
 const PASSWORD = 'ias-weekends';
 
 var currentGallery = null;
