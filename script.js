@@ -7,6 +7,7 @@ const galleries = {
 };
 
 // gallery config
+
 const PASSWORD = 'ias-weekends';
 
 var currentGallery = null;
