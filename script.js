@@ -1,4 +1,4 @@
-// IAS Weekends Gallery v1.3
+// IAS Weekends Gallery
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
@@ -8,29 +8,29 @@ const galleries = {
 
 const PASSWORD = 'ias-weekends';
 
-let currentGallery = 'switzerland2025';
-let lightboxPhotos = [];
-let lightboxIndex = 0;
+var currentGallery = 'switzerland2025';
+var lightboxPhotos = [];
+var lightboxIndex = 0;
 
-const pwScreen   = document.getElementById('password-screen');
-const mainSite   = document.getElementById('main-site');
-const pwInput    = document.getElementById('pw-input');
-const pwBtn      = document.getElementById('pw-btn');
-const pwError    = document.getElementById('pw-error');
-const dropToggle = document.querySelector('.dropdown-toggle');
-const dropMenu   = document.querySelector('.dropdown-menu');
-const lightbox   = document.getElementById('lightbox');
-const lbOverlay  = document.getElementById('lb-overlay');
-const lbImg      = document.getElementById('lb-img');
-const lbClose    = document.getElementById('lb-close');
-const lbPrev     = document.getElementById('lb-prev');
-const lbNext     = document.getElementById('lb-next');
+var pwScreen   = document.getElementById('password-screen');
+var mainSite   = document.getElementById('main-site');
+var pwInput    = document.getElementById('pw-input');
+var pwBtn      = document.getElementById('pw-btn');
+var pwError    = document.getElementById('pw-error');
+var dropToggle = document.querySelector('.dropdown-toggle');
+var dropMenu   = document.querySelector('.dropdown-menu');
+var lightbox   = document.getElementById('lightbox');
+var lbOverlay  = document.getElementById('lb-overlay');
+var lbImg      = document.getElementById('lb-img');
+var lbClose    = document.getElementById('lb-close');
+var lbPrev     = document.getElementById('lb-prev');
+var lbNext     = document.getElementById('lb-next');
 
 function checkPassword() {
   if (pwInput.value.trim() === PASSWORD) {
     pwScreen.style.display = 'none';
     mainSite.style.display = 'block';
-    setTimeout(function() { showGallery('switzerland2025'); }, 50);
+    showGallery('switzerland2025');
   } else {
     pwError.style.display = 'block';
     pwInput.value = '';
