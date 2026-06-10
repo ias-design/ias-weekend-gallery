@@ -61,13 +61,14 @@ dropMenu.querySelectorAll('a').forEach(link => {
 
 function showGallery(id) {
   currentGallery = id;
-  // Hide all sections
   document.querySelectorAll('.gallery-section').forEach(s => {
-    s.style.display = 'none';
+    s.classList.add('hidden');
+    s.style.display = '';
   });
-  // Show the selected one
   const section = document.getElementById(id);
-  if (section) section.style.display = 'block';
+  if (section) {
+    section.classList.remove('hidden');
+  }
   buildGrid(id);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
