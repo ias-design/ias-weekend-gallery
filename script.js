@@ -4,7 +4,7 @@ const galleries = {
       portugal2025:   { folder: 'photos/portugal2025',   count: 62 },
       switzerland2025:{ folder: 'photos/switzerland2025',count: 66 },
       greece2026:     { folder: 'photos/greece2026',     count: 0 }
-};h
+};
 
 const PASSWORD = 'ias-weekends';
 
