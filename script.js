@@ -1,4 +1,4 @@
-// IAS Weekends Gallery v1.2
+// IAS Weekends Gallery v1.3
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
@@ -28,9 +28,9 @@ const lbNext     = document.getElementById('lb-next');
 
 function checkPassword() {
   if (pwInput.value.trim() === PASSWORD) {
-    pwScreen.classList.add('hidden');
-    mainSite.classList.remove('hidden');
-    showGallery('switzerland2025');
+    pwScreen.style.display = 'none';
+    mainSite.style.display = 'block';
+    setTimeout(function() { showGallery('switzerland2025'); }, 50);
   } else {
     pwError.style.display = 'block';
     pwInput.value = '';
@@ -39,22 +39,22 @@ function checkPassword() {
 }
 
 pwBtn.addEventListener('click', checkPassword);
-pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
+pwInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') checkPassword(); });
 
-dropToggle.addEventListener('click', e => {
+dropToggle.addEventListener('click', function(e) {
   e.stopPropagation();
   dropMenu.classList.toggle('open');
 });
 
-document.addEventListener('click', () => dropMenu.classList.remove('open'));
+document.addEventListener('click', function() { dropMenu.classList.remove('open'); });
 
-dropMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', e => {
+dropMenu.querySelectorAll('a').forEach(function(link) {
+  link.addEventListener('click', function(e) {
     e.preventDefault();
-    const galleryId = link.dataset.gallery;
+    var galleryId = link.dataset.gallery;
     showGallery(galleryId);
     dropMenu.classList.remove('open');
-    dropMenu.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+    dropMenu.querySelectorAll('a').forEach(function(a) { a.classList.remove('active'); });
     link.classList.add('active');
     dropToggle.textContent = link.textContent + ' ▾';
   });
@@ -62,21 +62,21 @@ dropMenu.querySelectorAll('a').forEach(link => {
 
 function showGallery(id) {
   currentGallery = id;
-  // Remove active from all sections
-  document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
-  // Add active to the selected one
-  const section = document.getElementById(id);
+  document.querySelectorAll('.gallery-section').forEach(function(s) { s.classList.remove('active'); });
+  var section = document.getElementById(id);
   if (section) section.classList.add('active');
   buildGrid(id);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function buildGrid(id) {
-  const grid = document.getElementById('grid-' + id);
+  var grid = document.getElementById('grid-' + id);
   if (!grid) return;
   if (grid.dataset.built === 'true') return;
 
-  const { folder, count } = galleries[id];
+  var data = galleries[id];
+  var folder = data.folder;
+  var count = data.count;
 
   if (count === 0) {
     grid.innerHTML = '<p style="color:#aaa; font-size:0.85rem; letter-spacing:0.06em; padding: 20px 0;">Photos coming soon.</p>';
@@ -84,32 +84,34 @@ function buildGrid(id) {
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  var fragment = document.createDocumentFragment();
 
-  for (let i = 1; i <= count; i++) {
-    const num = String(i).padStart(3, '0');
-    const src = folder + '/' + num + '.jpg';
+  for (var i = 1; i <= count; i++) {
+    var num = String(i).padStart(3, '0');
+    var src = folder + '/' + num + '.jpg';
 
-    const item = document.createElement('div');
+    var item = document.createElement('div');
     item.className = 'photo-item';
     item.dataset.index = i - 1;
 
-    const img = document.createElement('img');
+    var img = document.createElement('img');
     img.src = src;
     img.alt = 'Photo ' + i;
     img.loading = 'lazy';
 
-    const dlBtn = document.createElement('a');
+    var dlBtn = document.createElement('a');
     dlBtn.className = 'dl-btn';
     dlBtn.href = src;
     dlBtn.download = num + '.jpg';
     dlBtn.title = 'Download photo';
     dlBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
-    dlBtn.addEventListener('click', e => e.stopPropagation());
+    dlBtn.addEventListener('click', function(e) { e.stopPropagation(); });
 
     item.appendChild(img);
     item.appendChild(dlBtn);
-    item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
+    (function(idx) {
+      item.addEventListener('click', function() { openLightbox(idx); });
+    })(i - 1);
     fragment.appendChild(item);
   }
 
@@ -118,10 +120,10 @@ function buildGrid(id) {
 }
 
 function openLightbox(index) {
-  const { folder, count } = galleries[currentGallery];
+  var data = galleries[currentGallery];
   lightboxPhotos = [];
-  for (let i = 1; i <= count; i++) {
-    lightboxPhotos.push(folder + '/' + String(i).padStart(3, '0') + '.jpg');
+  for (var i = 1; i <= data.count; i++) {
+    lightboxPhotos.push(data.folder + '/' + String(i).padStart(3, '0') + '.jpg');
   }
   lightboxIndex = index;
   lbImg.src = lightboxPhotos[lightboxIndex];
@@ -143,10 +145,10 @@ function lightboxNav(dir) {
 
 lbClose.addEventListener('click', closeLightbox);
 lbOverlay.addEventListener('click', closeLightbox);
-lbPrev.addEventListener('click', e => { e.stopPropagation(); lightboxNav(-1); });
-lbNext.addEventListener('click', e => { e.stopPropagation(); lightboxNav(1); });
+lbPrev.addEventListener('click', function(e) { e.stopPropagation(); lightboxNav(-1); });
+lbNext.addEventListener('click', function(e) { e.stopPropagation(); lightboxNav(1); });
 
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', function(e) {
   if (lightbox.classList.contains('hidden')) return;
   if (e.key === 'ArrowLeft')  lightboxNav(-1);
   if (e.key === 'ArrowRight') lightboxNav(1);
