@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IAS Weekends</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- PASSWORD SCREEN -->
+  <div id="password-screen">
+    <div class="pw-box">
+      <div class="pw-logo">IAS Weekends</div>
+      <p class="pw-subtitle">Please enter the password to continue</p>
+      <input type="password" id="pw-input" placeholder="Password" />
+      <button id="pw-btn">Enter</button>
+      <p id="pw-error">Incorrect password. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- MAIN SITE -->
+  <div id="main-site" class="hidden">
+
+    <header>
+      <div class="header-inner">
+        <div class="site-title">IAS Weekends</div>
+        <nav>
+          <div class="dropdown">
+            <button class="dropdown-toggle">Select Weekend &#9662;</button>
+            <ul class="dropdown-menu">
+              <li><a href="#" data-gallery="austria2024">Winter Weekend &mdash; Austria 2024</a></li>
+              <li><a href="#" data-gallery="portugal2025">Portugal Weekend &mdash; May 2025</a></li>
+              <li><a href="#" data-gallery="switzerland2025">Winter Weekend &mdash; Switzerland 2025</a></li>
+              <li><a href="#" data-gallery="greece2026">Greece Weekend &mdash; June 2026</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="gallery-section" id="austria2024">
+        <h1 class="gallery-title">Winter Weekend &mdash; Austria 2024</h1>
+        <div class="photo-grid" id="grid-austria2024"></div>
+      </section>
+      <section class="gallery-section hidden" id="portugal2025">
+        <h1 class="gallery-title">Portugal Weekend &mdash; May 2025</h1>
+        <div class="photo-grid" id="grid-portugal2025"></div>
+      </section>
+      <section class="gallery-section hidden" id="switzerland2025">
+        <h1 class="gallery-title">Winter Weekend &mdash; Switzerland 2025</h1>
+        <div class="photo-grid" id="grid-switzerland2025"></div>
+      </section>
+      <section class="gallery-section hidden" id="greece2026">
+        <h1 class="gallery-title">Greece Weekend &mdash; June 2026</h1>
+        <div class="photo-grid" id="grid-greece2026"></div>
+      </section>
+    </main>
+
+    <div id="lightbox" class="hidden">
+      <button id="lb-close">&times;</button>
+      <button id="lb-prev">&#8592;</button>
+      <img id="lb-img" src="" alt="Photo" />
+      <button id="lb-next">&#8594;</button>
+    </div>
+    <div id="lb-overlay" class="hidden"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+  </html>
