@@ -1,11 +1,3 @@
-// ===== GALLERY DATA =====
-// To add your photos, put your JPG files in folders inside the repo:
-//   photos/austria2024/001.jpg, 002.jpg, ... etc.
-//   photos/portugal2025/001.jpg, 002.jpg, ... etc.
-//   photos/switzerland2025/001.jpg, 002.jpg, ... etc.
-//   photos/greece2026/001.jpg, 002.jpg, ... etc.
-// Then update the count numbers below to match how many photos you have per trip.
-
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 0 },
   portugal2025:   { folder: 'photos/portugal2025',   count: 0 },
@@ -13,15 +5,12 @@ const galleries = {
   greece2026:     { folder: 'photos/greece2026',     count: 0 }
 };
 
-// ===== PASSWORD =====
 const PASSWORD = 'ias-weekends';
 
-// ===== STATE =====
-let currentGallery = 'austria2024';
+let currentGallery = 'switzerland2025';
 let lightboxPhotos = [];
 let lightboxIndex = 0;
 
-// ===== ELEMENTS =====
 const pwScreen   = document.getElementById('password-screen');
 const mainSite   = document.getElementById('main-site');
 const pwInput    = document.getElementById('pw-input');
@@ -36,12 +25,11 @@ const lbClose    = document.getElementById('lb-close');
 const lbPrev     = document.getElementById('lb-prev');
 const lbNext     = document.getElementById('lb-next');
 
-// ===== PASSWORD CHECK =====
 function checkPassword() {
   if (pwInput.value.trim() === PASSWORD) {
     pwScreen.classList.add('hidden');
     mainSite.classList.remove('hidden');
-    showGallery('austria2024');
+    showGallery('switzerland2025');
   } else {
     pwError.style.display = 'block';
     pwInput.value = '';
@@ -52,7 +40,6 @@ function checkPassword() {
 pwBtn.addEventListener('click', checkPassword);
 pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') checkPassword(); });
 
-// ===== DROPDOWN =====
 dropToggle.addEventListener('click', e => {
   e.stopPropagation();
   dropMenu.classList.toggle('open');
@@ -72,17 +59,19 @@ dropMenu.querySelectorAll('a').forEach(link => {
   });
 });
 
-// ===== SHOW GALLERY =====
 function showGallery(id) {
   currentGallery = id;
-  document.querySelectorAll('.gallery-section').forEach(s => s.classList.remove('active'));
+  // Hide all sections
+  document.querySelectorAll('.gallery-section').forEach(s => {
+    s.style.display = 'none';
+  });
+  // Show the selected one
   const section = document.getElementById(id);
-  if (section) section.classList.add('active');
+  if (section) section.style.display = 'block';
   buildGrid(id);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== BUILD PHOTO GRID =====
 function buildGrid(id) {
   const grid = document.getElementById('grid-' + id);
   if (!grid) return;
@@ -92,6 +81,7 @@ function buildGrid(id) {
 
   if (count === 0) {
     grid.innerHTML = '<p style="color:#aaa; font-size:0.85rem; letter-spacing:0.06em; padding: 20px 0;">Photos coming soon.</p>';
+    grid.dataset.built = 'true';
     return;
   }
 
@@ -110,7 +100,6 @@ function buildGrid(id) {
     img.alt = 'Photo ' + i;
     img.loading = 'lazy';
 
-    // Download button
     const dlBtn = document.createElement('a');
     dlBtn.className = 'dl-btn';
     dlBtn.href = src;
@@ -129,7 +118,6 @@ function buildGrid(id) {
   grid.dataset.built = 'true';
 }
 
-// ===== LIGHTBOX =====
 function openLightbox(index) {
   const { folder, count } = galleries[currentGallery];
   lightboxPhotos = [];
