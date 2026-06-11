@@ -1,4 +1,4 @@
-// IAS Weekends Gallery
+// IAS Weekends Gallery - v2
 const galleries = {
               austria2024:    { folder: 'photos/austria2024',    count: 42  },
               portugal2025:   { folder: 'photos/portugal2025',   count: 62  },
