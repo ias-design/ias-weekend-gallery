@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>IAS Weekends</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    #main-site { display: none; }
-  </style>
 </head>
 <body>
 
   <!-- PASSWORD SCREEN -->
   <div id="password-screen">
     <div class="pw-box">
-      <div class="pw-logo">IAS Weekends</div>
-      <p class="pw-subtitle">Please enter the password to continue</p>
+      <h1>IAS WEEKENDS</h1>
+      <p>Please enter the password to continue</p>
       <input type="password" id="pw-input" placeholder="Password" />
-      <button id="pw-btn">Enter</button>
+      <button id="pw-btn">ENTER</button>
       <p id="pw-error">Incorrect password. Please try again.</p>
     </div>
   </div>
@@ -26,20 +23,18 @@
   <div id="main-site">
 
     <header>
-      <div class="header-inner">
-        <div class="site-title">IAS Weekends</div>
-        <nav>
-          <div class="dropdown">
-            <button class="dropdown-toggle">Select Weekend &#9662;</button>
-            <ul class="dropdown-menu">
-              <li><a href="#" data-gallery="austria2024">Winter Weekend &mdash; Austria 2024</a></li>
-              <li><a href="#" data-gallery="portugal2025">Portugal Weekend &mdash; May 2025</a></li>
-              <li><a href="#" data-gallery="switzerland2025">Winter Weekend &mdash; Switzerland 2025</a></li>
-              <li><a href="#" data-gallery="greece2026">Greece Weekend &mdash; June 2026</a></li>
-            </ul>
+      <div class="site-title">IAS WEEKENDS</div>
+      <nav>
+        <div class="dropdown">
+          <button class="dropdown-toggle">SELECT WEEKEND &#9662;</button>
+          <div class="dropdown-menu">
+            <a href="#" data-gallery="austria2024">Winter Weekend &mdash; Austria 2024</a>
+            <a href="#" data-gallery="portugal2025">Portugal Weekend &mdash; May 2025</a>
+            <a href="#" data-gallery="switzerland2025">Winter Weekend &mdash; Switzerland 2025</a>
+            <a href="#" data-gallery="greece2026">Greece Weekend &mdash; June 2026</a>
           </div>
-        </nav>
-      </div>
+        </div>
+      </nav>
     </header>
 
     <main>
@@ -62,13 +57,14 @@
     </main>
 
     <!-- LIGHTBOX -->
-    <div id="lightbox" class="hidden">
+    <div id="lightbox">
+      <div id="lb-overlay"></div>
       <button id="lb-close">&times;</button>
       <button id="lb-prev">&#8592;</button>
       <img id="lb-img" src="" alt="Photo" />
       <button id="lb-next">&#8594;</button>
+      <a id="lb-download" href="#" download>&#8595; Download</a>
     </div>
-    <div id="lb-overlay" class="hidden"></div>
 
   </div>
 
