@@ -1,7 +1,7 @@
 // IAS Weekends Gallery - v2
 const galleries = {
   austria2024:    { folder: 'photos/austria2024',    count: 42, fullFolder: 'photos/austria2024/full' },
-  portugal2025:   { folder: 'photos/portugal2025',   count: 62 },
+  portugal2025:   { folder: 'photos/portugal2025',   count: 62, fullFolder: 'photos/portugal2025/full' },
   switzerland2025:{ folder: 'photos/switzerland2025',count: 66 },
   greece2026:     { folder: 'photos/greece2026',     count: 257, fullFolder: 'photos/greece2026/full' }
 };
